@@ -6,13 +6,14 @@ var force = 0.0;
 var distance = 0.0;
 var torque = 0.0;
 
-var settings = QuickSettings.create(0, 0, 'Torque Inputs')
+var settings = QuickSettings.create(80, 80, 'Torque Inputs')
   .addNumber('Force', 0, 100, 0, 0.5)
   .addNumber('Distance', 0, 100, 0, 0.5)
   .addNumber('Angle (degrees)', 0, 180, 0, 10);
 
 function setup() {
   canvas = createCanvas(winW, winH);
+  canvas.parent('canvas');
   background(100);
   rectMode(CENTER);
   angleMode(DEGREES);

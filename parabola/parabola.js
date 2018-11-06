@@ -24,6 +24,7 @@ var angleLbl;
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('canvas');
   canvas.style('display', 'block');
   frameRate(60);
   pos = createVector(0, 0);
@@ -31,7 +32,7 @@ function setup() {
   background(200);
   angleMode(DEGREES);
 
-  inputsPos = createVector(80, 20);
+  inputsPos = createVector(80, 80);
 
   initPosXLbl = createDiv('Pos x');
   initPosXLbl.position(inputsPos.x - 65, inputsPos.y);

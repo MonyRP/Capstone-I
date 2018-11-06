@@ -4,8 +4,8 @@ var angle;
 var x;
 var y;
 
-var p = QuickSettings.create()
-  .addRange('rotate', -Math.PI, Math.PI , 0, 0.05, draw);
+var p = QuickSettings.create(30, 80, 'Fractal Input')
+  .addRange('rotate', -Math.PI, Math.PI, 0, 0.05, draw);
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -39,11 +39,11 @@ function draw() {
 
 
 function branch(length) {
-  if(length < 30){
-  stroke(random(255),random(255),random(255));
-}else{
-  stroke(46,139,87);
-}
+  if (length < 30) {
+    stroke(random(255), random(255), random(255));
+  } else {
+    stroke(46, 139, 87);
+  }
   strokeWeight(3);
   line(0, 0, 0, -length);
   translate(0, -length);
