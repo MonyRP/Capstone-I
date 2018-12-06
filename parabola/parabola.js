@@ -1,4 +1,7 @@
 var canvas;
+var canvasDiv = document.getElementById('canvas');
+var canvasWidth = canvasDiv.offsetWidth;
+var canvasHeight = canvasDiv.offsetHeight;
 var initPosX;
 var initPosY;
 var initVel;
@@ -23,56 +26,57 @@ var angleLbl;
 
 
 function setup() {
-  canvas = createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(canvasWidth, windowHeight);
   canvas.parent('canvas');
-  canvas.style('display', 'block');
+  // canvas.style('display', 'block');
   frameRate(60);
   pos = createVector(0, 0);
 
   background(200);
   angleMode(DEGREES);
 
-  inputsPos = createVector(80, 80);
+  inputsPos = createVector(60, 150);
 
-  initPosXLbl = createDiv('Pos x');
-  initPosXLbl.position(inputsPos.x - 65, inputsPos.y);
-  initPosX = createInput('0', 'number');
-  initPosX.position(inputsPos.x, inputsPos.y);
 
-  initPosYLbl = createDiv('Pos y');
-  initPosYLbl.position(inputsPos.x - 65, inputsPos.y + 25);
-  initPosY = createInput('0', 'number');
-  initPosY.position(inputsPos.x, inputsPos.y + 25);
-
-  initVel = createDiv('Velocity');
-  initVel.position(inputsPos.x - 65, inputsPos.y + 50);
+  initVelLbl = createDiv('Velocity');
+  initVelLbl.parent('controls');
+  initVelLbl.position(inputsPos.x - 65, inputsPos.y + 50);
   initVel = createInput('35', 'number');
+  initVel.parent('controls');
   initVel.position(inputsPos.x, inputsPos.y + 50);
 
-  accX = createDiv('Wind');
-  accX.position(inputsPos.x - 65, inputsPos.y + 75);
+  accXLbl = createDiv('Wind');
+  accXLbl.parent('controls');
+  accXLbl.position(inputsPos.x - 65, inputsPos.y + 75);
   accX = createInput('0', 'number');
+  accX.parent('controls');
   accX.elt.step = 0.01;
   accX.position(inputsPos.x, inputsPos.y + 75);
   accX.style('margin', '0');
 
-  accY = createDiv('Gravity');
-  accY.position(inputsPos.x - 65, inputsPos.y + 100);
+  accYLbl = createDiv('Gravity');
+  accYLbl.parent('controls');
+  accYLbl.position(inputsPos.x - 65, inputsPos.y + 100);
   accY = createInput('9.81', 'number');
+  accY.parent('controls');
   accY.elt.step = 0.01;
   accY.position(inputsPos.x, inputsPos.y + 100);
   accY.style('margin', '0');
 
-  angle = createDiv('Angle');
-  angle.position(inputsPos.x - 65, inputsPos.y + 125);
+  angleLbl = createDiv('Angle');
+  angleLbl.parent('controls');
+  angleLbl.position(inputsPos.x - 65, inputsPos.y + 125);
   angle = createInput('60', 'number');
+  angle.parent('controls');
   angle.position(inputsPos.x, inputsPos.y + 125);
 
   submit = createButton('submit');
+  submit.parent('controls');
   submit.position(inputsPos.x + 5, inputsPos.y + 155);
   submit.mousePressed(submitted);
 
   reset = createButton('reset');
+  reset.parent('controls');
   reset.position(inputsPos.x + 80, inputsPos.y + 155);
   reset.mousePressed(resets);
 
@@ -112,4 +116,10 @@ function draw() {
       t += 1;
     }
   }
+}
+
+
+function windowResized() {
+  var canvasWidth = canvasDiv.offsetWidth;
+  resizeCanvas(canvasWidth, windowHeight);
 }

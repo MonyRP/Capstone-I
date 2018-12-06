@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="projectile.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      <title>Projectile</title>
+   </head>
+   <body>
+      <nav id="navBar" class="navbar navbar-expand-lg nav-pills nav-fill navbar-dark bg-dark">
+         <a class="navbar-brand" href="../index.html">Capstone I</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+               <a class="nav-item nav-link active" href="projectile.js">Projectile</a>
+               <a class="nav-item nav-link" href="../torque/torque.html">Torque</a>
+               <a class="nav-item nav-link" href="../spring/spring.html">Spring</a>
+            </div>
+         </div>
+      </nav>
+
+      <div class="container-fluid">
+         <div class="row justify-content-between">
+            <!--div to hold inputs and show current values, left side of screen -->
+            <div id="controls" class="col-2 bg-info text-white">
+               <h2>Inputs:</h2>
+               <div class="form-group">
+                  <label for="velocity">Velocity:</label>
+                  <input type="number" class="form-control" placeholder="In meters per second" id="velocity">
+               </div>
+               <div class="form-group">
+                  <label for="angle">Angle:</label>
+                  <input type="number" class="form-control" placeholder="In degrees" id="angle">
+               </div>
+               <br>
+               <button type="button" class="btn btn-secondary btn-lg" onclick="resetControls()">Reset</button>
+               <button type="button" class="btn btn-primary btn-lg" onclick="runSketch(projectileSketch)">Run Projectile</button>
+
+               <br><br>
+               <h2>Current Values:</h2>
+               <div class="form-group">
+                  <label for="currentTime">Current Time:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="currentTime">
+               </div>
+               <div class="form-group">
+                  <label for="currentHeight">Current Height:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="currentHeight">
+               </div>
+               <div class="form-group">
+                  <label for="currentRange">Current Range:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="currentRange">
+               </div>
+               <div class="form-group">
+                  <label for="currentV">Current Velocity:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="currentV">
+               </div>
+               <div class="form-group">
+                  <label for="currentVX">Current X Velocity:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="currentVX">
+               </div>
+               <div class="form-group">
+                  <label for="currentVY">Current Y Velocity:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="currentVY">
+               </div>
+            </div>
+
+            <!--div to hold Graph of Projectile, center of screen -->
+            <div id="canvas" class="col-8 bg-info"></div>
+
+            <!-- div to hold max values of graph and get values at a specific time, right side of screen -->
+            <div id="values" class="col-2 bg-info text-white">
+               <h2>Maximum Values:</h2>
+               <div class="form-group">
+                  <label for="maxHeight">Maximum Height:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="maxHeight">
+               </div>
+               <div class="form-group">
+                  <label for="maxRange">Maximum Range:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="maxRange">
+               </div>
+               <div class="form-group">
+                  <label for="flightTime">Flight Time:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="flightTime">
+               </div>
+
+               <h2>Get Values at Specified Time:</h2>
+               <div class="form-group">
+                  <label for="specificTime">Specified Time:</label>
+                  <input type="number" class="form-control" placeholder="Time in seconds" id="specificTime">
+               </div>
+               <div class="form-group">
+                  <label for="specificHeight">Height at Specified Time:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="specificHeight">
+               </div>
+               <div class="form-group">
+                  <label for="specificRange">Range at Specified Time:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="specificRange">
+               </div>
+               <div class="form-group">
+                  <label for="specificVelocity">Velocity at Specified Time:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="specificVelocity">
+               </div>
+               <div class="form-group">
+                  <label for="specificVX">X Velocity at Specified Time:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="specificVX">
+               </div>
+               <div class="form-group">
+                  <label for="specificVY">Y Velocity at Specified Time:</label>
+                  <input type="text" class="form-control bg-secondary text-white" id="specificVY">
+               </div>
+               <button type="button" class="btn btn-primary" onclick="specificTime()">Values at Given Time</button>
+            </div>
+
+         </div>
+         <!--end row -->
+      </div>
+
+      <script src="../lib/p5.min.js"></script>
+      <script src="../lib/p5.dom.min.js"></script>
+      <script src="../lib/p5.sound.min.js"></script>
+      <script src="../lib/p5.speech.js"></script>
+      <script src="../lib/p5.collide2d.js"></script>
+      <script src="../lib/quicksettings.js"></script>
+      <script src="../lib/grafica.js"></script>
+      <script src="projectile.js"></script>
+      <script src="projectileBlank.js"></script>
+      <script src="projectileFunctions.js"></script>
+      <script>
+         runSketch(blankSketch);
+      </script>
+   </body>
+</html>
