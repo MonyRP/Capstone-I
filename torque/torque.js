@@ -26,6 +26,8 @@ var vec;
 var leverLength;
 var lever;
 
+var torqueLabel;
+var torqueInput;
 
 
 function setup() {
@@ -37,12 +39,12 @@ function setup() {
 
   inputsPos = createVector(120, 150);
 
-  forceLabel = createDiv('Force');
+  forceLabel = createDiv('Force (N)');
   forceLabel.parent('controls');
-  forceLabel.position(inputsPos.x - 65, inputsPos.y - 24);
-  force = createSlider(0, 500, 100, 1);
+  forceLabel.position(inputsPos.x - 95, inputsPos.y - 24);
+  force = createSlider(0, 100, 50, 1);
   force.parent('controls');
-  force.elt.step = 0.01;
+  force.elt.step = 0.10;
   force.size(120);
   force.position(inputsPos.x, inputsPos.y - 20);
 
@@ -51,10 +53,10 @@ function setup() {
   forceOutput.position(inputsPos.x + 130, inputsPos.y - 24);
 
 
-  rLabel = createDiv('Length');
+  rLabel = createDiv('Distance (m)');
   rLabel.parent('controls');
-  rLabel.position(inputsPos.x - 65, inputsPos.y + 55);
-  r = createSlider(0, 250, 150, 1);
+  rLabel.position(inputsPos.x - 95, inputsPos.y + 55);
+  r = createSlider(0, 2.5, 1.5, 1);
   r.parent('controls');
   r.elt.step = 0.10;
   r.size(120);
@@ -64,9 +66,9 @@ function setup() {
   rOutput.parent('controls');
   rOutput.position(inputsPos.x + 130, inputsPos.y + 60);
 
-  thetaLabel = createDiv('Theta');
+  thetaLabel = createDiv('Theta (deg)');
   thetaLabel.parent('controls');
-  thetaLabel.position(inputsPos.x - 65, inputsPos.y + 126);
+  thetaLabel.position(inputsPos.x - 95, inputsPos.y + 126);
   theta = createSlider(0, 180, 0, 1);
   theta.parent('controls');
   theta.elt.step = 1;
@@ -77,21 +79,29 @@ function setup() {
   thetaOutput.parent('controls');
   thetaOutput.position(inputsPos.x + 130, inputsPos.y + 130);
 
+  torqueLabel = createDiv('Torque (Nm)');
+  torqueLabel.parent('controls');
+  torqueLabel.position(inputsPos.x - 95, inputsPos.y + 190);
+  torqueInput = createInput('0', 'number');
+  torqueInput.parent('controls');
+  torqueInput.elt.step = 0.10;
+  torqueInput.size(120);
+  torqueInput.position(inputsPos.x, inputsPos.y + 190);
+
 }
-
-
 
 function draw() {
   background(150);
 
-  distance = createVector(r.value(), 0);
+  distance = createVector(r.value()*100, 0);
   angle = theta.value();
   doorAngle = torque / 695; //settings.getValue('Door Angle (degrees)');
-  torque = distance.x * force.value() * Math.sin((angle * (Math.PI / 180)));
+  torque = distance.x * (force.value()*5) * Math.sin((angle * (Math.PI / 180)));
 
   forceOutput.html(force.value());
   rOutput.html(r.value());
   thetaOutput.html(theta.value());
+  torqueInput.value((torque/500).toFixed(2));
 
   leverLength = createVector(250, 0);
 
@@ -112,7 +122,7 @@ function draw() {
 
   // Draw Force vectors x component
   if (angle != 90 && force.value() != 0) {
-    vec = createVector(-force.value() * cos(angle), 0);
+    vec = createVector(2*-force.value() * cos(angle), 0);
     drawArrow(distance, vec, 'black');
     push();
     translate(distance.x, distance.y);
@@ -125,14 +135,14 @@ function draw() {
 
   // Draw Force vectors y component
   if (angle != 0 && angle != 180 && force.value() != 0) {
-    vec = createVector(0, -force.value() * sin(angle));
+    vec = createVector(0,2* -force.value() * sin(angle));
     drawArrow(distance, vec, 'white');
     push();
     translate(distance.x, distance.y);
     textSize(18);
     fill(0);
     noStroke();
-    text('Fy = ' + abs((-force.value() * sin(angle)).toFixed(2)), -38, -force.value() * sin(angle) - 10);
+    text('Fy = ' + abs((-force.value() * sin(angle)).toFixed(2)), -38, -force.value() * sin(angle) - 30);
     pop();
   }
 
@@ -140,7 +150,7 @@ function draw() {
   if (force.value() != 0) {
 
     forceVec = createVector(distance.x, 0);
-    vec = createVector(force.value() * cos(angle), force.value() * sin(angle));
+    vec = createVector(2*force.value() * cos(angle), 2*force.value() * sin(angle));
     drawArrowInverse(forceVec, vec, 'red');
     push();
     translate(distance.x, distance.y);
